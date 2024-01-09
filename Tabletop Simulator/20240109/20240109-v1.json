@@ -1,7 +1,7 @@
 {
-  "SaveName": "0109-ver1",
-  "EpochTime": 1704808671,
-  "Date": "1/9/2024 9:57:51 PM",
+  "SaveName": "20240109",
+  "EpochTime": 1704809696,
+  "Date": "1/9/2024 10:14:56 PM",
   "VersionNumber": "v13.2.2",
   "GameMode": "没有",
   "GameType": "",
@@ -215,7 +215,7 @@
     "TurnColor": ""
   },
   "DecalPallet": [],
-  "LuaScript": "-- [[ 显示每个人手牌数的小方块 --]]\r\npara_disp = {\r\n    click_function = \"empty_func\",\r\n    function_owner = self,\r\n    label          = \"0\",\r\n    position       = {0, 1, 0},\r\n    rotation       = {0, 180, 0},\r\n    width          = 800,\r\n    height         = 400,\r\n    font_size      = 340,\r\n    color          = {0.5, 0.5, 0.5},\r\n    font_color     = {1, 1, 1},\r\n}\r\n\r\n--[[ The onLoad event is called after the game save finishes loading. --]]\r\nfunction onLoad()\r\n    params = {\r\n        click_function = \"get_card\",\r\n        function_owner = self,\r\n        label          = \"初始发牌\",\r\n        position       = {0, 1, 0},\r\n        rotation       = {0, 180, 0},\r\n        width          = 800,\r\n        height         = 400,\r\n        font_size      = 340,\r\n        color          = {0.5, 0.5, 0.5},\r\n        font_color     = {1, 1, 1},\r\n        tooltip        = \"点击按钮为每位玩家发五张牌\",\r\n    }\r\n    sq = getObjectFromGUID('267d39')\r\n    sq.createButton(params)\r\n\r\n    disp1 = getObjectFromGUID('93c8fd')\r\n    disp1.createButton(para_disp)\r\n    disp2 = getObjectFromGUID('d55bcc')\r\n    disp2.createButton(para_disp)\r\n    disp3 = getObjectFromGUID('6ee1f8')\r\n    disp3.createButton(para_disp)\r\n    disp4 = getObjectFromGUID('fe0a7b')\r\n    disp4.createButton(para_disp)\r\n\r\n    -- print('NBNBNB')\r\nend\r\n\r\n-- [[ 发牌 --]]\r\nfunction get_card(obj, color, alt_click)\r\n    if alt_click then\r\n        return\r\n    end\r\n    local deck = getObjectFromGUID('6049c7')\r\n    local cards = deck.getObjects()\r\n    local players = getSeatedPlayers()\r\n    for i, player in ipairs(players) do\r\n        for j = 1, 5 do\r\n            local card = cards[1]\r\n            deck.takeObject({\r\n                position = {0, 0, 0},\r\n                rotation = {0, 180, 0},\r\n                smooth   = false,\r\n                index    = 0,\r\n                callback_function = function(obj)\r\n                    obj.deal(1, player)\r\n                end\r\n            })\r\n        end\r\n    end\r\nend\r\n\r\nfunction get_disp_id(color)\r\n    if color == 'White' then\r\n        return '93c8fd'\r\n    elseif color == 'Purple' then\r\n        return 'd55bcc'\r\n    elseif color == 'Green' then\r\n        return '6ee1f8'\r\n    elseif color == 'Orange' then\r\n        return 'fe0a7b'\r\n    end\r\nend\r\n\r\n--[[ 实时显示每位玩家的手牌数 --]]\r\nfunction show_hand()\r\n    local players = Player.getPlayers()\r\n    local playerid = getSeatedPlayers()\r\n    for i, player in ipairs(players) do\r\n        -- print(i)\r\n        -- print(player)\r\n        local pid = playerid[i]\r\n        -- print(pid)\r\n        local hand = player.getHandObjects()\r\n        local hand_num = #hand\r\n        -- print(hand_num)\r\n        local disp_id = get_disp_id(pid)\r\n        -- print(disp_id)\r\n        local hand_num_obj = getObjectFromGUID(disp_id)\r\n        hand_num_obj.editButton({\r\n            label = hand_num,\r\n        })\r\n    end\r\nend\r\n\r\n--[[ The onUpdate event is called once per frame. --]]\r\nfunction onUpdate()\r\n    --[[ print('onUpdate loop!') --]]\r\n    show_hand()\r\nend\r\n\r\nfunction empty_func()\r\nend\r\n",
+  "LuaScript": "-- [[ 显示每个人手牌数的小方块 --]]\r\npara_disp = {\r\n    click_function = \"empty_func\",\r\n    function_owner = self,\r\n    label          = \"0\",\r\n    position       = {0, 1, 0},\r\n    rotation       = {0, 180, 0},\r\n    width          = 1500,\r\n    height         = 1000,\r\n    font_size      = 2000,\r\n    color          = {0.5, 0.5, 0.5},\r\n    font_color     = {1, 1, 1},\r\n}\r\n\r\n--[[ The onLoad event is called after the game save finishes loading. --]]\r\nfunction onLoad()\r\n    params = {\r\n        click_function = \"get_card\",\r\n        function_owner = self,\r\n        label          = \"初始发牌\",\r\n        position       = {0, 1, 0},\r\n        rotation       = {0, 180, 0},\r\n        width          = 3400,\r\n        height         = 1000,\r\n        font_size      = 800,\r\n        color          = {0.5, 0.5, 0.5},\r\n        font_color     = {1, 1, 1},\r\n        tooltip        = \"点击按钮为每位玩家发五张牌\",\r\n    }\r\n    sq = getObjectFromGUID('267d39')\r\n    sq.createButton(params)\r\n\r\n    disp1 = getObjectFromGUID('93c8fd')\r\n    disp1.createButton(para_disp)\r\n    disp2 = getObjectFromGUID('d55bcc')\r\n    disp2.createButton(para_disp)\r\n    disp3 = getObjectFromGUID('6ee1f8')\r\n    disp3.createButton(para_disp)\r\n    disp4 = getObjectFromGUID('fe0a7b')\r\n    disp4.createButton(para_disp)\r\n\r\n    -- print('NBNBNB')\r\nend\r\n\r\n-- [[ 发牌 --]]\r\nfunction get_card(obj, color, alt_click)\r\n    if alt_click then\r\n        return\r\n    end\r\n    local deck = getObjectFromGUID('6049c7')\r\n    local cards = deck.getObjects()\r\n    local players = getSeatedPlayers()\r\n    for i, player in ipairs(players) do\r\n        for j = 1, 5 do\r\n            local card = cards[1]\r\n            deck.takeObject({\r\n                position = {0, 0, 0},\r\n                rotation = {0, 180, 0},\r\n                smooth   = false,\r\n                index    = 0,\r\n                callback_function = function(obj)\r\n                    obj.deal(1, player)\r\n                end\r\n            })\r\n        end\r\n    end\r\nend\r\n\r\nfunction get_disp_id(color)\r\n    if color == 'White' then\r\n        return '93c8fd'\r\n    elseif color == 'Purple' then\r\n        return 'd55bcc'\r\n    elseif color == 'Green' then\r\n        return '6ee1f8'\r\n    elseif color == 'Orange' then\r\n        return 'fe0a7b'\r\n    end\r\nend\r\n\r\n--[[ 实时显示每位玩家的手牌数 --]]\r\nfunction show_hand()\r\n    local players = Player.getPlayers()\r\n    local playerid = getSeatedPlayers()\r\n    for i, player in ipairs(players) do\r\n        -- print(i)\r\n        -- print(player)\r\n        local pid = playerid[i]\r\n        -- print(pid)\r\n        local hand = player.getHandObjects()\r\n        local hand_num = #hand\r\n        -- print(hand_num)\r\n        local disp_id = get_disp_id(pid)\r\n        -- print(disp_id)\r\n        local hand_num_obj = getObjectFromGUID(disp_id)\r\n        hand_num_obj.editButton({\r\n            label = hand_num,\r\n        })\r\n    end\r\nend\r\n\r\n--[[ The onUpdate event is called once per frame. --]]\r\nfunction onUpdate()\r\n    --[[ print('onUpdate loop!') --]]\r\n    show_hand()\r\nend\r\n\r\nfunction empty_func()\r\nend\r\n",
   "LuaScriptState": "",
   "XmlUI": "<!-- Xml UI. See documentation: https://api.tabletopsimulator.com/ui/introUI/ -->",
   "ObjectStates": [
@@ -225,10 +225,10 @@
       "Transform": {
         "posX": 19.43806,
         "posY": 0.9736049,
-        "posZ": -0.4028524,
-        "rotX": -1.13257581E-08,
+        "posZ": -0.402852446,
+        "rotX": -6.701658E-09,
         "rotY": 90.00026,
-        "rotZ": -1.81897192E-07,
+        "rotZ": -1.8616781E-07,
         "scaleX": 2.98826337,
         "scaleY": 1.0,
         "scaleZ": 2.98826337
@@ -284,9 +284,9 @@
         "posX": -0.0788778439,
         "posY": 0.9736049,
         "posZ": 19.1460266,
-        "rotX": -2.36328788E-08,
-        "rotY": -4.63274264E-05,
-        "rotZ": 2.691556E-08,
+        "rotX": -1.65475615E-08,
+        "rotY": -4.63274373E-05,
+        "rotZ": 1.52823478E-08,
         "scaleX": 2.98826337,
         "scaleY": 1.0,
         "scaleZ": 2.98826337
@@ -339,12 +339,12 @@
       "GUID": "dc814d",
       "Name": "Card",
       "Transform": {
-        "posX": -0.5735283,
+        "posX": -0.5735276,
         "posY": 0.9736049,
         "posZ": -19.82939,
-        "rotX": -4.03147666E-08,
+        "rotX": -2.656968E-08,
         "rotY": 179.999756,
-        "rotZ": -2.101724E-08,
+        "rotZ": 1.52334252E-08,
         "scaleX": 2.98826337,
         "scaleY": 1.0,
         "scaleZ": 2.98826337
@@ -399,10 +399,10 @@
       "Transform": {
         "posX": -20.0606117,
         "posY": 0.9736049,
-        "posZ": -0.447101861,
-        "rotX": 4.315536E-07,
+        "posZ": -0.4471009,
+        "rotX": -1.800352E-07,
         "rotY": 270.0,
-        "rotZ": 1.3164251E-08,
+        "rotZ": 5.73765E-09,
         "scaleX": 2.98826337,
         "scaleY": 1.0,
         "scaleZ": 2.98826337
@@ -1110,7 +1110,7 @@
         "posX": -6.183838,
         "posY": 1.05314124,
         "posZ": -3.91260314,
-        "rotX": -4.093421E-08,
+        "rotX": -7.77720359E-08,
         "rotY": 180.0017,
         "rotZ": 180.0,
         "scaleX": 2.481165,
@@ -2056,7 +2056,7 @@
         "posX": 6.44268751,
         "posY": 1.02907109,
         "posZ": -3.86549282,
-        "rotX": 1.97184971E-08,
+        "rotX": -1.43095562E-08,
         "rotY": 180.0,
         "rotZ": 180.0,
         "scaleX": 2.481165,
@@ -2704,10 +2704,10 @@
       "GUID": "6049c7",
       "Name": "Deck",
       "Transform": {
-        "posX": -0.1402454,
+        "posX": -0.140245423,
         "posY": 1.24570274,
         "posZ": 5.304454,
-        "rotX": 7.46192663E-10,
+        "rotX": -3.38091E-08,
         "rotY": 180.0,
         "rotZ": 180.0,
         "scaleX": 2.481165,
@@ -6248,8 +6248,8 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.283971876,
-        "g": 0.393106163,
+        "r": 0.283971816,
+        "g": 0.3931061,
         "b": 1.0
       },
       "LayoutGroupSortIndex": 0,
@@ -6283,9 +6283,9 @@
         "posX": -0.123533048,
         "posY": 1.46,
         "posZ": -8.157177,
-        "rotX": -1.124877E-08,
-        "rotY": 1.05520871E-06,
-        "rotZ": 2.05045382E-07,
+        "rotX": 1.90907244E-07,
+        "rotY": 1.05565459E-06,
+        "rotZ": 3.01657082E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -6305,7 +6305,7 @@
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
-      "Locked": false,
+      "Locked": true,
       "Grid": true,
       "Snap": true,
       "IgnoreFoW": false,
@@ -6328,9 +6328,9 @@
         "posX": 11.7925768,
         "posY": 1.46,
         "posZ": -19.9802036,
-        "rotX": 2.18213714E-07,
-        "rotY": -7.186234E-08,
-        "rotZ": 6.619106E-08,
+        "rotX": 2.46874237E-08,
+        "rotY": -6.320121E-08,
+        "rotZ": 3.33401329E-09,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -6344,13 +6344,13 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.128999829,
+        "r": 0.12899977,
         "g": 0.694,
         "b": 0.606999934
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
-      "Locked": false,
+      "Locked": true,
       "Grid": true,
       "Snap": true,
       "IgnoreFoW": false,
@@ -6373,9 +6373,9 @@
         "posX": -12.6395407,
         "posY": 1.46,
         "posZ": 20.95762,
-        "rotX": 1.29656684E-07,
+        "rotX": -2.13347047E-08,
         "rotY": 180.0,
-        "rotZ": 9.796648E-08,
+        "rotZ": 4.02607753E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -6389,13 +6389,13 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1289998,
+        "r": 0.12899974,
         "g": 0.694,
         "b": 0.606999934
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
-      "Locked": false,
+      "Locked": true,
       "Grid": true,
       "Snap": true,
       "IgnoreFoW": false,
@@ -6416,11 +6416,11 @@
       "Name": "BlockSquare",
       "Transform": {
         "posX": -19.9724865,
-        "posY": 1.4600004,
+        "posY": 1.46000016,
         "posZ": -11.9069309,
-        "rotX": 2.45661369E-07,
+        "rotX": 1.682172E-08,
         "rotY": 90.0,
-        "rotZ": 2.46586239E-07,
+        "rotZ": 8.242806E-09,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -6434,13 +6434,13 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1289998,
+        "r": 0.12899974,
         "g": 0.694,
         "b": 0.606999934
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
-      "Locked": false,
+      "Locked": true,
       "Grid": true,
       "Snap": true,
       "IgnoreFoW": false,
@@ -6461,11 +6461,11 @@
       "Name": "BlockSquare",
       "Transform": {
         "posX": 20.1995182,
-        "posY": 1.4600004,
+        "posY": 1.46000028,
         "posZ": 11.3827028,
-        "rotX": 2.7327772E-07,
+        "rotX": 3.88527127E-07,
         "rotY": 270.0,
-        "rotZ": 2.05032649E-07,
+        "rotZ": 8.673756E-08,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -6479,13 +6479,13 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1289998,
+        "r": 0.12899974,
         "g": 0.694,
         "b": 0.606999934
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
-      "Locked": false,
+      "Locked": true,
       "Grid": true,
       "Snap": true,
       "IgnoreFoW": false,
